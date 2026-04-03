@@ -1,0 +1,11 @@
+Important:
+This zip includes the Flutter app code, assets, Android manifest/config, and project structure.
+Because this environment could not embed the Gradle wrapper binary, if Android Studio or flutter complains about missing wrapper/platform files, run this once inside the project root:
+
+flutter create .
+
+That command will regenerate the missing native wrapper files without replacing your lib/ app code.
+
+Then run:
+flutter pub get
+flutter run
