@@ -1,0 +1,25 @@
+name: task_management_flutter
+description: Modern Flutter Task Management app for the provided Node.js backend.
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.5.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  dio: ^5.9.2
+  flutter_secure_storage: ^10.0.0
+  flutter_svg: ^2.2.4
+  intl: ^0.20.2
+  flutter_riverpod: ^2.5.0
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/svg/

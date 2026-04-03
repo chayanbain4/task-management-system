@@ -1,0 +1,22 @@
+# Backend
+backend/node_modules/
+backend/dist/
+backend/.env
+backend/prisma/migrations/
+
+# Web Frontend
+Web-frontend/node_modules/
+Web-frontend/.next/
+Web-frontend/.env
+Web-frontend/.env.local
+
+# Flutter
+Flutter-frontend/.dart_tool/
+Flutter-frontend/build/
+Flutter-frontend/.flutter-plugins
+Flutter-frontend/.flutter-plugins-dependencies
+Flutter-frontend/pubspec.lock
+
+# General
+.DS_Store
+*.zip
