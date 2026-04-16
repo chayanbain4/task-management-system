@@ -1,204 +1,138 @@
-# Task Management System — Software Engineering Assessment
+🚀 Task Management System
 
-A complete **Task Management System** built for the assessment requirements — including the mandatory backend, **both** Track A (Web) and Track B (Flutter mobile app).
+A full-stack Task Management System built with modern technologies, featuring a secure backend API, a responsive web application, and a cross-platform mobile app.
 
----
+This project demonstrates real-world application architecture, authentication workflows, and scalable design patterns.
 
-## What is included
-
-### Backend (Mandatory)
-- Node.js + TypeScript + Express
-- Prisma ORM + PostgreSQL
-- JWT access token + refresh token authentication
-- bcrypt password hashing
-- Full task CRUD scoped to authenticated user
-- Pagination, filtering by status, and title search on `GET /tasks`
-- Zod validation + standard HTTP error handling
-
-### Track A — Web Frontend (Next.js)
-- Login and registration pages
-- Auto session restore using refresh token
-- Access token auto-refresh on 401 (Axios interceptor)
-- Task dashboard with create, edit, delete, toggle, search, filter, pagination
-- Responsive design (mobile + desktop)
-- Toast notifications for all actions
-
-### Track B — Flutter Mobile App
-- Login and registration screens with animated gradient UI
-- Secure token storage using `flutter_secure_storage`
-- Auto token refresh on 401 with request retry (Dio interceptor)
-- Task list with `ListView.builder`, pull-to-refresh, infinite scroll
-- Add, edit, delete, toggle task status
-- Filter by status + debounced search by title
-- Delete confirmation dialog
-- Snackbar error handling (401, 500, network errors)
-- Riverpod state management with layered architecture (UI → Controller → Repository → API)
-
----
-
-## Project Structure
-
-```text
+📌 Features
+🔐 Authentication
+User registration & login
+Secure password hashing using bcrypt
+JWT-based authentication (Access + Refresh tokens)
+Automatic session restoration
+Token refresh on expiration (401 handling)
+✅ Task Management
+Create, update, delete tasks
+Toggle task completion status
+User-specific task isolation
+Pagination for large datasets
+Search tasks by title
+Filter tasks by status
+🛠 Tech Stack
+Backend
+Node.js + TypeScript
+Express.js
+PostgreSQL
+Prisma ORM
+JWT Authentication
+Zod Validation
+Web Frontend
+Next.js
+Axios (API handling)
+Responsive UI design
+Mobile App
+Flutter
+Riverpod (State Management)
+Dio (HTTP Client)
+Secure Storage
+📁 Project Structure
 task-management-system/
-  backend/              # Node.js + TypeScript API
-  Web-frontend/         # Next.js web app (Track A)
-  Flutter-frontend/     # Flutter mobile app (Track B)
-  docker-compose.yml    # PostgreSQL via Docker (optional)
-  README.md
-```
-
----
-
-## Backend Endpoints
-
-### Auth
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/auth/register` | Register new user |
-| POST | `/auth/login` | Login |
-| POST | `/auth/refresh` | Refresh access token |
-| POST | `/auth/logout` | Logout |
-
-### Tasks (Bearer token required)
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/tasks` | List tasks (pagination, filter, search) |
-| POST | `/tasks` | Create task |
-| GET | `/tasks/:id` | Get single task |
-| PATCH | `/tasks/:id` | Update task |
-| DELETE | `/tasks/:id` | Delete task |
-| PATCH | `/tasks/:id/toggle` | Toggle task status |
-
----
-
-## 1) Backend Setup
-
-### Option A — PostgreSQL via Docker (easiest)
-
-```bash
+│
+├── backend/              # Node.js + TypeScript API
+├── Web-frontend/         # Next.js web app
+├── Flutter-frontend/     # Flutter mobile app
+├── docker-compose.yml    # PostgreSQL setup (optional)
+└── README.md
+⚙️ API Endpoints
+Authentication
+Method	Endpoint	Description
+POST	/auth/register	Register user
+POST	/auth/login	Login
+POST	/auth/refresh	Refresh token
+POST	/auth/logout	Logout
+Tasks (Protected)
+Method	Endpoint	Description
+GET	/tasks	Get tasks (pagination, filter, search)
+POST	/tasks	Create task
+GET	/tasks/:id	Get task
+PATCH	/tasks/:id	Update task
+DELETE	/tasks/:id	Delete task
+PATCH	/tasks/:id/toggle	Toggle status
+🚀 Getting Started
+1️⃣ Backend Setup
+Option A: Docker (Recommended)
 docker-compose up -d
-```
-
-### Option B — Local PostgreSQL
-
-```bash
+Option B: Local PostgreSQL
 createdb task_management
-```
-
-### Then run the backend
-
-```bash
+Run Backend
 cd backend
 cp .env.example .env
-```
 
-Edit `.env` and fill in your values:
+Update .env:
 
-```env
 PORT=4000
 NODE_ENV=development
 FRONTEND_URL=http://localhost:3000
 DATABASE_URL=postgresql://postgres:yourpassword@localhost:5432/task_management?schema=public
-JWT_ACCESS_SECRET=replace_with_a_long_random_access_secret
-JWT_REFRESH_SECRET=replace_with_a_long_random_refresh_secret
+JWT_ACCESS_SECRET=your_access_secret
+JWT_REFRESH_SECRET=your_refresh_secret
 ACCESS_TOKEN_EXPIRES_IN=15m
 REFRESH_TOKEN_EXPIRES_IN=7d
 BCRYPT_SALT_ROUNDS=10
 COOKIE_SECURE=false
-```
-
-```bash
 npm install
 npx prisma generate
 npx prisma migrate dev --name init
 npm run dev
-```
 
-Backend runs at `http://localhost:4000`
+👉 Backend runs on: http://localhost:4000
 
----
-
-## 2) Web Frontend Setup (Track A)
-
-```bash
+2️⃣ Web Frontend Setup
 cd Web-frontend
 cp .env.example .env.local
 npm install
 npm run dev
-```
 
-App runs at `http://localhost:3000`
+Add in .env.local:
 
-```env
 NEXT_PUBLIC_API_BASE_URL=http://localhost:4000
-```
 
-> Make sure the backend is running first.
+👉 Web app runs on: http://localhost:3000
 
----
-
-## 3) Flutter App Setup (Track B)
-
-```bash
+3️⃣ Flutter App Setup
 cd Flutter-frontend
 flutter pub get
 flutter run
-```
-
-> The app connects to `http://10.0.2.2:4000` by default (Android emulator alias for localhost).
-
-### Running on physical Android device
-
-Find your computer IP (`ifconfig` on Mac, `ipconfig` on Windows) and run:
-
-```bash
+Emulator (Default)
+http://10.0.2.2:4000
+Physical Device
 flutter run --dart-define=API_BASE_URL=http://YOUR_IP:4000
-```
-
-### Running on iOS simulator
-
-```bash
+iOS Simulator
 flutter run --dart-define=API_BASE_URL=http://localhost:4000
-```
+🔒 Security Practices
+Passwords hashed using bcrypt
+JWT authentication with expiration handling
+Refresh token mechanism for session persistence
+Protected API routes with middleware
+Environment variables for sensitive data
+📦 GitHub Guidelines
+✅ Include
+Source code
+Prisma schema & migrations
+.env.example
+Documentation
+❌ Exclude
+.env / .env.local
+node_modules/
+Build files
+Secrets or credentials
+🌟 Highlights
+Full-stack architecture (Backend + Web + Mobile)
+Clean and scalable code structure
+Advanced authentication flow (JWT + refresh tokens)
+Real-world API features (search, filter, pagination)
+Cross-platform implementation using Flutter
+👨‍💻 Author
 
-See `Flutter-frontend/README.md` for full Flutter setup instructions.
-
----
-
-## 4) GitHub Rules
-
-Safe to push:
-- Source code
-- Prisma schema + migrations
-- `.env.example`
-- README files
-
-Do NOT push:
-- `.env` or `.env.local`
-- `node_modules/`
-- `build/`
-- Database data or secrets
-
----
-
-## 5) Assessment Coverage
-
-| Requirement | Status |
-|-------------|--------|
-| Node.js + TypeScript backend | ✅ |
-| SQL database with Prisma ORM | ✅ |
-| JWT access + refresh tokens | ✅ |
-| bcrypt password hashing | ✅ |
-| Auth endpoints (register, login, refresh, logout) | ✅ |
-| Task endpoints (CRUD + toggle) | ✅ |
-| Pagination, filtering, searching | ✅ |
-| Next.js web frontend (Track A) | ✅ |
-| Login + registration pages | ✅ |
-| Responsive task dashboard | ✅ |
-| Task CRUD + toast notifications | ✅ |
-| Flutter mobile app (Track B) | ✅ |
-| Secure token storage | ✅ |
-| Auto token refresh on 401 | ✅ |
-| ListView.builder + pull-to-refresh | ✅ |
-| Riverpod layered architecture | ✅ |
-| CRUD + snackbar error handling | ✅ |
+Chayan Bain
+Full Stack Developer (MERN + Flutter)
